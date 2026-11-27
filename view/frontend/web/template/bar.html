@@ -20,16 +20,12 @@
     <!-- ko if: hasTerms -->
     <button type="button" class="cart-progress-bar__terms-toggle"
             data-bind="click: toggleTerms, attr: {'aria-expanded': termsShown() ? 'true' : 'false', 'aria-label': termsToggleLabel, title: termsToggleLabel}">
-        <!-- ko ifnot: termsShown -->
-        <svg class="cart-progress-bar__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <svg class="cart-progress-bar__icon cart-progress-bar__icon--info" viewBox="0 0 24 24" aria-hidden="true" focusable="false" data-bind="visible: !termsShown()">
             <path fill-rule="evenodd" d="M12 0a12 12 0 1 0 0 24a12 12 0 1 0 0-24ZM10.5 10h3v8h-3ZM12 4.75a1.75 1.75 0 1 1 0 3.5a1.75 1.75 0 1 1 0-3.5Z"/>
         </svg>
-        <!-- /ko -->
-        <!-- ko if: termsShown -->
-        <svg class="cart-progress-bar__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <svg class="cart-progress-bar__icon cart-progress-bar__icon--close" viewBox="0 0 24 24" aria-hidden="true" focusable="false" data-bind="visible: termsShown">
             <path fill-rule="evenodd" d="M12 0a12 12 0 1 0 0 24a12 12 0 1 0 0-24ZM7.05 8.46L8.46 7.05L12 10.59L15.54 7.05L16.95 8.46L13.41 12L16.95 15.54L15.54 16.95L12 13.41L8.46 16.95L7.05 15.54L10.59 12Z"/>
         </svg>
-        <!-- /ko -->
     </button>
     <!-- /ko -->
 </div>

@@ -5,6 +5,21 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-11-27
+
+### Fixed
+- Pressing the info button inside a dropdown, such as the minicart, no longer closes it: both icons stay in the page
+  and only their visibility changes, and the icons take no clicks, so the click lands on the button itself.
+
+### Changed
+- The module no longer sets a store's look on the amounts and the info button: amounts are not bold or coloured by
+  default, and the button takes the text's colour and size. A theme styles `cart-progress-bar__amount`,
+  `cart-progress-bar__terms-toggle` and `cart-progress-bar__icon`. The icons carry `cart-progress-bar__icon--info` and
+  `cart-progress-bar__icon--close`.
+
+### Removed
+- The CSS custom property `--cart-progress-bar-amount`.
+
 ## [1.2.2] - 2026-11-27
 
 ### Fixed
