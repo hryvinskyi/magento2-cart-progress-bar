@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+ * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+ * GitHub: https://github.com/hryvinskyi
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- A theme that prints the cart form's jsLayout decides where the bar renders on the cart page. -->
+        <referenceBlock name="checkout.cart.form">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="cart-progress-bar-cart" xsi:type="array">
+                            <item name="component" xsi:type="string">Hryvinskyi_CartProgressBar/js/bar</item>
+                            <item name="config" xsi:type="array">
+                                <item name="template" xsi:type="string">Hryvinskyi_CartProgressBar/bar</item>
+                                <item name="placement" xsi:type="string">cart</item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

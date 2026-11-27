@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+ * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+ * GitHub: https://github.com/hryvinskyi
+ */
+
+declare(strict_types=1);
+
+use Hryvinskyi\CartProgressBar\ViewModel\BarConfig;
+use Magento\Framework\App\Request\Http;
+
+/**
+ * The bar at the top of the header, on the page types the store chose: a container that reserves the bar's height
+ * and the component that fills it in the browser. Prints nothing on other pages or where the bar does not show.
+ *
+ * Block arguments: view_model (the bar's view model) and jsLayout (the component of this placement).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+
+$barConfig = $block->getData('view_model');
+$request = $block->getRequest();
+$fullActionName = $request instanceof Http ? $request->getFullActionName() : '';
+if (!$barConfig instanceof BarConfig || !$barConfig->isShownAtTopOn($fullActionName)) {
+    return;
+}
+?>
+<div class="cart-progress-bar-top" data-role="cart-progress-bar-top" data-bind="scope: 'cart-progress-bar-top'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "[data-role=cart-progress-bar-top]": {
+            "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+        }
+    }
+</script>

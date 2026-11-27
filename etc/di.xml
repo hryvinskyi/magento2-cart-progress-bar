@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+ * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+ * GitHub: https://github.com/hryvinskyi
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Hryvinskyi\CartProgressBar\Api\Data\GoalInterface"
+                type="Hryvinskyi\CartProgressBar\Model\Goal"/>
+    <!-- The goals of a store are those of every provider other modules add to the "providers" argument. -->
+    <preference for="Hryvinskyi\CartProgressBar\Api\GoalProviderInterface"
+                type="Hryvinskyi\CartProgressBar\Model\Goals"/>
+    <preference for="Hryvinskyi\CartProgressBar\Api\PageTypesInterface"
+                type="Hryvinskyi\CartProgressBar\Model\PageTypes"/>
+    <preference for="Hryvinskyi\CartProgressBar\Api\BarCacheInterface"
+                type="Hryvinskyi\CartProgressBar\Model\BarCache"/>
+    <preference for="Hryvinskyi\CartProgressBar\Api\LinkPolicyInterface"
+                type="Hryvinskyi\CartProgressBar\Model\LinkPolicy"/>
+
+    <type name="Hryvinskyi\CartProgressBar\ViewModel\BarConfig">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Magento\Framework\Serialize\Serializer\JsonHexTag</argument>
+        </arguments>
+    </type>
+
+    <type name="Hryvinskyi\CartProgressBar\Model\PageTypes">
+        <arguments>
+            <argument name="pageTypes" xsi:type="array">
+                <item name="home" xsi:type="array">
+                    <item name="action" xsi:type="string">cms_index_index</item>
+                    <item name="label" xsi:type="string" translatable="true">Home Page</item>
+                </item>
+                <item name="category" xsi:type="array">
+                    <item name="action" xsi:type="string">catalog_category_view</item>
+                    <item name="label" xsi:type="string" translatable="true">Category Page</item>
+                </item>
+                <item name="search" xsi:type="array">
+                    <item name="action" xsi:type="string">catalogsearch_result_index</item>
+                    <item name="label" xsi:type="string" translatable="true">Search Results</item>
+                </item>
+                <item name="cart" xsi:type="array">
+                    <item name="action" xsi:type="string">checkout_cart_index</item>
+                    <item name="label" xsi:type="string" translatable="true">Shopping Cart</item>
+                </item>
+                <item name="product" xsi:type="array">
+                    <item name="action" xsi:type="string">catalog_product_view</item>
+                    <item name="label" xsi:type="string" translatable="true">Product Page</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+ * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+ * GitHub: https://github.com/hryvinskyi
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="cart_progress_bar" translate="label" type="text" sortOrder="450"
+                 showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Cart Progress Bar</label>
+            <tab>sales</tab>
+            <resource>Hryvinskyi_CartProgressBar::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <comment>Shows the shopper's progress towards a spend goal in the minicart and on the cart page, and at the top of the header on the pages chosen below. The bar shows only when a goal is set up for the store.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="page_types" translate="label comment" type="multiselect" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show at the Top on</label>
+                    <comment>Pages that show the bar at the top of the header.</comment>
+                    <source_model>Hryvinskyi\CartProgressBar\Model\Config\Source\PageTypes</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

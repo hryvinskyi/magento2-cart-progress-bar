@@ -1,0 +1,15 @@
+parameters:
+    level: 10
+    paths:
+        - .
+    excludePaths:
+        - vendor (?)
+        - Test/Js (?)
+    bootstrapFiles:
+        - ../../../../vendor/autoload.php
+        - ../../../../dev/tests/integration/framework/autoload.php
+    scanFiles:
+        - Test/phpstan/generated/GoalInterfaceFactory.php
+    scanDirectories:
+        - ../../../../generated/code
+        - ../../../../dev/tests/integration/framework

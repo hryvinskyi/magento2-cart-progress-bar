@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+ * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+ * GitHub: https://github.com/hryvinskyi
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Template"
+                   name="cart_progress_bar.style"
+                   template="Hryvinskyi_CartProgressBar::style.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Hryvinskyi\CartProgressBar\ViewModel\BarConfig</argument>
+                    <argument name="asset_renderer" xsi:type="object">Hryvinskyi\ThemeAssets\Api\AssetRendererInterface</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+
+        <referenceContainer name="header.container">
+            <block class="Hryvinskyi\CartProgressBar\Block\Bar"
+                   name="cart_progress_bar.top"
+                   before="header.panel.wrapper"
+                   template="Hryvinskyi_CartProgressBar::top.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Hryvinskyi\CartProgressBar\ViewModel\BarConfig</argument>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="cart-progress-bar-top" xsi:type="array">
+                                <item name="component" xsi:type="string">Hryvinskyi_CartProgressBar/js/bar</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="template" xsi:type="string">Hryvinskyi_CartProgressBar/bar</item>
+                                    <item name="placement" xsi:type="string">top</item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="before.body.end">
+            <block class="Hryvinskyi\CartProgressBar\Block\Bar"
+                   name="cart_progress_bar.config"
+                   template="Hryvinskyi_CartProgressBar::config.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Hryvinskyi\CartProgressBar\ViewModel\BarConfig</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceBlock name="minicart">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="cart-progress-bar-minicart" xsi:type="array">
+                            <item name="component" xsi:type="string">Hryvinskyi_CartProgressBar/js/bar</item>
+                            <item name="config" xsi:type="array">
+                                <item name="template" xsi:type="string">Hryvinskyi_CartProgressBar/bar</item>
+                                <item name="placement" xsi:type="string">minicart</item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

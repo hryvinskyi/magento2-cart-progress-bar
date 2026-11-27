@@ -1,0 +1,34 @@
+<?php
+/**
+ * Copyright (c) 2026. Volodymyr Hryvinskyi. All rights reserved.
+ * Author: Volodymyr Hryvinskyi <volodymyr@hryvinskyi.com>
+ * GitHub: https://github.com/hryvinskyi
+ */
+
+declare(strict_types=1);
+
+use Hryvinskyi\CartProgressBar\ViewModel\BarConfig;
+use Hryvinskyi\ThemeAssets\Api\AssetRendererInterface;
+
+/**
+ * The bar's critical style, inline in the head so that it applies before the header is laid out: the top placement
+ * reserves its height before the bar fills it. Prints nothing where the bar does not show.
+ *
+ * Block arguments: view_model (the bar's view model) and asset_renderer.
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+
+$barConfig = $block->getData('view_model');
+$assetRenderer = $block->getData('asset_renderer');
+if (!$barConfig instanceof BarConfig
+    || !$assetRenderer instanceof AssetRendererInterface
+    || !$barConfig->isEnabled()
+) {
+    return;
+}
+?>
+<?= /* @noEscape */ $assetRenderer->renderStyle(
+    'Hryvinskyi_CartProgressBar::css/bar.css',
+    AssetRendererInterface::RENDER_INLINE
+) ?>

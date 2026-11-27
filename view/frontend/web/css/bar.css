@@ -1,0 +1,9 @@
+.cart-progress-bar-top{min-height:var(--cart-progress-bar-top-height,2.75em)}
+.cart-progress-bar{background:var(--cart-progress-bar-bg,#f4f4f4);color:var(--cart-progress-bar-text,#000);font-size:.875em;line-height:1.3}
+.cart-progress-bar__body{display:flex;align-items:center;justify-content:center;gap:.75em;padding:.5em 1em;color:inherit;text-decoration:none}
+.cart-progress-bar__body[href]:hover .cart-progress-bar__text{text-decoration:underline}
+.cart-progress-bar__image{flex:none;width:2em;height:2em;object-fit:contain}
+.cart-progress-bar__content{display:flex;flex-direction:column;gap:.25em;min-width:0;max-width:32em;width:100%;text-align:center}
+.cart-progress-bar__track{display:block;height:.25em;border-radius:.125em;background:rgba(0,0,0,.12);overflow:hidden}
+.cart-progress-bar__fill{display:block;height:100%;width:0;background:var(--cart-progress-bar-accent,#333);transition:width .3s ease}
+.cart-progress-bar--minicart .cart-progress-bar__body,.cart-progress-bar--cart .cart-progress-bar__body{justify-content:flex-start}
