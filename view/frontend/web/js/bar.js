@@ -44,7 +44,6 @@ define([
             this.phase = ko.observable('initial');
             this.link = ko.observable('');
             this.image = ko.observable('');
-            this.terms = ko.observable('');
             this.termsParts = ko.observableArray([]);
             this.termsShown = ko.observable(false);
             this.goalCode = ko.observable('');
@@ -90,7 +89,6 @@ define([
             this.phase(shown.phase);
             this.link(goal.link);
             this.image(goal.image);
-            this.terms(shown.terms);
             this.termsParts(shown.termsParts);
             this.goalCode(goal.code);
             this.visible(true);

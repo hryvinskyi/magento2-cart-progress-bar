@@ -5,6 +5,16 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-11-27
+
+### Fixed
+- Pointing at a bar with a link no longer turns its text into the theme's link colour and underlines it; the link
+  keeps the bar's colours on hover, focus and once visited.
+- The link no longer shows the terms as a tooltip, which repeated what the info button shows.
+
+### Removed
+- `text` and `terms` from what the progress model's `display()` returns; the bar reads `parts` and `termsParts`.
+
 ## [1.2.0] - 2026-11-27
 
 ### Added
