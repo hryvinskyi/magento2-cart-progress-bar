@@ -7,7 +7,8 @@
 /**
  * One placement of the bar (top, minicart, cart). It reads the page's
  * configuration, follows the cart section, and shows the goal the progress
- * model picks, with its text formatted in the store's price format. Until
+ * model picks, with its text formatted in the store's price format and its
+ * amounts set apart from the words. Until
  * the section arrives it shows the first goal's initial state, which is the
  * same for every visitor. Without a valid configuration it shows nothing.
  */
@@ -36,7 +37,7 @@ define([
             this._super();
             this.config = barConfig.read();
             this.visible = ko.observable(false);
-            this.text = ko.observable('');
+            this.parts = ko.observableArray([]);
             this.percent = ko.observable(0);
             this.phase = ko.observable('initial');
             this.link = ko.observable('');
@@ -70,7 +71,7 @@ define([
                 }),
                 shown = progress.display(goal, progress.amountAt(section, goal.amountKey), this.price.bind(this));
 
-            this.text(shown.text);
+            this.parts(shown.parts);
             this.percent(shown.percent);
             this.phase(shown.phase);
             this.link(goal.link);

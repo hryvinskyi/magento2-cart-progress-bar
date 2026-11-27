@@ -11,7 +11,7 @@
         <img class="cart-progress-bar__image" alt="" data-bind="attr: {src: image}"/>
         <!-- /ko -->
         <span class="cart-progress-bar__content">
-            <span class="cart-progress-bar__text" data-bind="text: text"></span>
+            <span class="cart-progress-bar__text"><!-- ko foreach: parts --><!-- ko if: amount --><b class="cart-progress-bar__amount" data-bind="text: text"></b><!-- /ko --><!-- ko ifnot: amount --><!-- ko text: text --><!-- /ko --><!-- /ko --><!-- /ko --></span>
             <span class="cart-progress-bar__track" aria-hidden="true">
                 <span class="cart-progress-bar__fill" data-bind="style: {width: percent() + '%'}"></span>
             </span>

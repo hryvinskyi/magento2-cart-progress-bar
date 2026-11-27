@@ -5,7 +5,7 @@ Shows the shopper how far the cart is from a spend goal: a bar with a message an
 ## What it does for a store
 
 - **Three placements.** At the top of the header on the page types the store chose, in the minicart and on the cart page. The minicart and cart placements show whenever the bar is enabled and a goal exists.
-- **A message by phase.** Each goal has a wording for three phases: **initial** (the cart holds nothing towards the goal), **progress** (on the way) and **achieved** (the goal is reached), and its terms. The wording takes the placeholders `{{goal}}`, the amount of the goal, and `{{goal_left}}`, the amount still to spend, both formatted in the store's price format. The text is always shown as text, never as markup. The track fills with the share reached, in whole percent, and is full once the goal is reached.
+- **A message by phase.** Each goal has a wording for three phases: **initial** (the cart holds nothing towards the goal), **progress** (on the way) and **achieved** (the goal is reached), and its terms. The wording takes the placeholders `{{goal}}`, the amount of the goal, and `{{goal_left}}`, the amount still to spend, both formatted in the store's price format, and each amount is printed in bold apart from the words around it. The text is always shown as text, never as markup. The track fills with the share reached, in whole percent, and is full once the goal is reached.
 - **Several goals, one bar.** Goals are ordered by priority, the lowest number first. The bar shows the first goal the cart has not reached; once every goal is reached it shows the first goal's achieved message. The choice is made in the browser, because the amounts are private.
 - **Optional link and image.** A goal can link the whole bar to an address and show an image beside the text; its terms become the link's `title`. Only an address on the web that starts with `http://` or `https://`, or a path on the site that starts with a single `/`, is printed as a link; any other link (`//other.example/x`, `ftp://…`, `javascript:…`) leaves the bar without one. The rule is `Hryvinskyi\CartProgressBar\Api\LinkPolicyInterface`, so a setting that stores a goal's link can refuse what the bar would drop.
 - **Safe with the full-page cache.** Everything printed into a page is the same for every visitor of the store: the goals and the price format, in one JSON block printed once per page. The shopper's own amount is read in the browser from the `cart` customer-data section, so the pages stay shared. Until the section arrives the bar shows the first goal's initial message.
@@ -133,9 +133,10 @@ The top placement renders itself. A theme renders the other two where it wants t
 | `--cart-progress-bar-bg` | background | `#f4f4f4` |
 | `--cart-progress-bar-text` | text colour | `#000` |
 | `--cart-progress-bar-accent` | colour of the progress track | `#333` |
+| `--cart-progress-bar-amount` | colour of the amounts in the text | the text colour |
 | `--cart-progress-bar-top-height` | height the top placement reserves | `2.75em` |
 
-**Classes.** The markup is `cart-progress-bar` with `cart-progress-bar__body` (the link), `__image`, `__content`, `__text`, `__track` and `__fill`. The root carries `cart-progress-bar--<phase>` (`initial`, `progress`, `achieved`), `cart-progress-bar--<placement>` (`top`, `minicart`, `cart`) and `cart-progress-bar--goal-<code>`, so a theme can style one goal or one phase apart. The top placement's container is `cart-progress-bar-top`.
+**Classes.** The markup is `cart-progress-bar` with `cart-progress-bar__body` (the link), `__image`, `__content`, `__text` (with each amount in a `__amount` element), `__track` and `__fill`. The root carries `cart-progress-bar--<phase>` (`initial`, `progress`, `achieved`), `cart-progress-bar--<placement>` (`top`, `minicart`, `cart`) and `cart-progress-bar--goal-<code>`, so a theme can style one goal or one phase apart. The top placement's container is `cart-progress-bar-top`.
 
 **Template.** The component's template is `Hryvinskyi_CartProgressBar/bar` (`view/frontend/web/template/bar.html`); a theme overrides it the way it overrides any module's web template.
 

@@ -7,7 +7,8 @@
 /**
  * The bar's arithmetic and wording, free of the page: the phase of a goal for
  * the shopper's amount, the goal the bar shows when there are several, the
- * labels and the terms with their placeholders filled, and the amount read
+ * labels and the terms with their placeholders filled, a label cut into its
+ * words and its amounts, and the amount read
  * from the cart section. Amounts are compared in hundredths, so a float sum never misses
  * the goal by a fraction of a penny.
  */
@@ -68,6 +69,38 @@ define([], function () {
     }
 
     /**
+     * A label cut into its words and its amounts: every `{{goal}}` and
+     * `{{goal_left}}` becomes a part of its own marked as an amount, the text
+     * between them a part of words. No part is empty, and every part is
+     * text, never markup.
+     *
+     * @param {*} label The label as configured; anything but text is no label
+     * @param {string} formattedGoal The goal, formatted as a price
+     * @param {string} formattedLeft The amount left, formatted as a price
+     * @returns {Array<{text: string, amount: boolean}>}
+     */
+    function parts(label, formattedGoal, formattedLeft) {
+        var text = typeof label === 'string' ? label : '',
+            pattern = /\{\{(goal|goal_left)\}\}/g,
+            result = [],
+            start = 0,
+            match;
+
+        while ((match = pattern.exec(text)) !== null) {
+            if (match.index > start) {
+                result.push({ text: text.slice(start, match.index), amount: false });
+            }
+            result.push({ text: match[1] === 'goal' ? formattedGoal : formattedLeft, amount: true });
+            start = pattern.lastIndex;
+        }
+        if (start < text.length) {
+            result.push({ text: text.slice(start), amount: false });
+        }
+
+        return result;
+    }
+
+    /**
      * A label with every `{{goal}}` and `{{goal_left}}` filled. The result is
      * text, never markup.
      *
@@ -77,9 +110,9 @@ define([], function () {
      * @returns {string}
      */
     function fill(label, formattedGoal, formattedLeft) {
-        var text = typeof label === 'string' ? label : '';
-
-        return text.split('{{goal}}').join(formattedGoal).split('{{goal_left}}').join(formattedLeft);
+        return parts(label, formattedGoal, formattedLeft).map(function (part) {
+            return part.text;
+        }).join('');
     }
 
     /**
@@ -99,22 +132,25 @@ define([], function () {
     /**
      * What the bar shows for a goal and the shopper's amount towards it: the
      * phase, the percent reached, the label of the phase and the terms, each
-     * label filled with the goal and the amount left in the given format.
+     * label filled with the goal and the amount left in the given format, and
+     * the label of the phase cut into its words and its amounts.
      *
      * @param {{amount: number, labels: Object<string, string>}} goal
      * @param {number} amount The shopper's amount towards the goal
      * @param {function(number): string} formatPrice Formats an amount as a price
-     * @returns {{phase: string, percent: number, text: string, terms: string}}
+     * @returns {{phase: string, percent: number, text: string, parts: Array<{text: string, amount: boolean}>, terms: string}}
      */
     function display(goal, amount, formatPrice) {
         var current = state(goal.amount, amount),
             formattedGoal = formatPrice(goal.amount),
-            formattedLeft = formatPrice(current.left);
+            formattedLeft = formatPrice(current.left),
+            label = goal.labels ? goal.labels[current.phase] : '';
 
         return {
             phase: current.phase,
             percent: current.percent,
-            text: message(goal.labels, current.phase, formattedGoal, formattedLeft),
+            text: fill(label, formattedGoal, formattedLeft),
+            parts: parts(label, formattedGoal, formattedLeft),
             terms: fill(goal.labels ? goal.labels.terms : '', formattedGoal, formattedLeft)
         };
     }

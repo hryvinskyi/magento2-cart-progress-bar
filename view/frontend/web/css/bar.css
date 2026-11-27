@@ -4,6 +4,7 @@
 .cart-progress-bar__body[href]:hover .cart-progress-bar__text{text-decoration:underline}
 .cart-progress-bar__image{flex:none;width:2em;height:2em;object-fit:contain}
 .cart-progress-bar__content{display:flex;flex-direction:column;gap:.25em;min-width:0;max-width:32em;width:100%;text-align:center}
+.cart-progress-bar__amount{font-weight:700;color:var(--cart-progress-bar-amount,inherit)}
 .cart-progress-bar__track{display:block;height:.25em;border-radius:.125em;background:rgba(0,0,0,.12);overflow:hidden}
 .cart-progress-bar__fill{display:block;height:100%;width:0;background:var(--cart-progress-bar-accent,#333);transition:width .3s ease}
 .cart-progress-bar--minicart .cart-progress-bar__body,.cart-progress-bar--cart .cart-progress-bar__body{justify-content:flex-start}

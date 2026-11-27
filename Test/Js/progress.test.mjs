@@ -5,7 +5,8 @@
  *
  * The bar's arithmetic and wording (view/frontend/web/js/model/progress.js):
  * the phase of a goal for an amount, the goal the bar shows when there are
- * several, the label with its placeholders filled, and the shopper's amount
+ * several, the label with its placeholders filled and cut into its words and
+ * its amounts, and the shopper's amount
  * read from the cart section.
  *
  * Run: node --test 'Test/Js/*.test.mjs'
@@ -100,8 +101,31 @@ test('what the bar shows for a goal fills the terms as it fills the label of the
         phase: 'progress',
         percent: 71,
         text: 'Spend £20.00 more to unlock your FREE lamp!',
+        parts: [
+            { text: 'Spend ', amount: false },
+            { text: '£20.00', amount: true },
+            { text: ' more to unlock your FREE lamp!', amount: false },
+        ],
         terms: 'Free Gift is available for orders over £70.00 only, £20.00 to go.',
     });
+});
+
+test('the amounts a label carries are parts of their own between its words, and no part is empty', () => {
+    const goal = { amount: 70, labels: { ...LABELS, progress: '{{goal_left}} to go of {{goal}}{{goal_left}}!' } };
+
+    assert.deepEqual(progress().display(goal, 50, (amount) => `£${amount.toFixed(2)}`).parts, [
+        { text: '£20.00', amount: true },
+        { text: ' to go of ', amount: false },
+        { text: '£70.00', amount: true },
+        { text: '£20.00', amount: true },
+        { text: '!', amount: false },
+    ]);
+});
+
+test('a label without placeholders is one part of words', () => {
+    assert.deepEqual(progress().display({ amount: 70, labels: LABELS }, 70, (amount) => `£${amount}`).parts, [
+        { text: 'You have unlocked your FREE lamp!', amount: false },
+    ]);
 });
 
 test('the amount is read at a dot path of the cart section', () => {
