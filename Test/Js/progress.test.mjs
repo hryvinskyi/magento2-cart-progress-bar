@@ -91,7 +91,7 @@ test('a phase without a label shows no text', () => {
     assert.equal(progress().message({ initial: 'Spend {{goal}}' }, 'progress', '£70.00', '£20.00'), '');
 });
 
-test('what the bar shows for a goal fills the terms as it fills the label of the phase', () => {
+test('what the bar shows for a goal fills the terms as it fills the label of the phase, and cuts both into words and amounts', () => {
     const goal = {
         amount: 70,
         labels: { ...LABELS, terms: 'Free Gift is available for orders over {{goal}} only, {{goal_left}} to go.' },
@@ -107,6 +107,13 @@ test('what the bar shows for a goal fills the terms as it fills the label of the
             { text: ' more to unlock your FREE lamp!', amount: false },
         ],
         terms: 'Free Gift is available for orders over £70.00 only, £20.00 to go.',
+        termsParts: [
+            { text: 'Free Gift is available for orders over ', amount: false },
+            { text: '£70.00', amount: true },
+            { text: ' only, ', amount: false },
+            { text: '£20.00', amount: true },
+            { text: ' to go.', amount: false },
+        ],
     });
 });
 

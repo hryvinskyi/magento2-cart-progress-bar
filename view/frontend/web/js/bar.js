@@ -8,18 +8,20 @@
  * One placement of the bar (top, minicart, cart). It reads the page's
  * configuration, follows the cart section, and shows the goal the progress
  * model picks, with its text formatted in the store's price format and its
- * amounts set apart from the words. Until
- * the section arrives it shows the first goal's initial state, which is the
- * same for every visitor. Without a valid configuration it shows nothing.
+ * amounts set apart from the words. A goal with terms gets a button that
+ * shows the terms in place of the text and back. Until the section arrives
+ * it shows the first goal's initial state, which is the same for every
+ * visitor. Without a valid configuration it shows nothing.
  */
 define([
     'uiComponent',
     'ko',
+    'mage/translate',
     'Magento_Customer/js/customer-data',
     'Magento_Catalog/js/price-utils',
     'Hryvinskyi_CartProgressBar/js/model/config',
     'Hryvinskyi_CartProgressBar/js/model/progress'
-], function (Component, ko, customerData, priceUtils, barConfig, progress) {
+], function (Component, ko, $t, customerData, priceUtils, barConfig, progress) {
     'use strict';
 
     return Component.extend({
@@ -43,11 +45,23 @@ define([
             this.link = ko.observable('');
             this.image = ko.observable('');
             this.terms = ko.observable('');
+            this.termsParts = ko.observableArray([]);
+            this.termsShown = ko.observable(false);
             this.goalCode = ko.observable('');
+            this.hasTerms = ko.pureComputed(function () {
+                return this.termsParts().length > 0;
+            }, this);
+            this.shownParts = ko.pureComputed(function () {
+                return this.termsShown() && this.hasTerms() ? this.termsParts() : this.parts();
+            }, this);
+            this.termsToggleLabel = ko.pureComputed(function () {
+                return this.termsShown() ? $t('Hide the terms') : $t('Show the terms');
+            }, this);
             this.classes = ko.pureComputed(function () {
                 return 'cart-progress-bar--' + this.phase()
                     + ' cart-progress-bar--' + this.placement
-                    + ' cart-progress-bar--goal-' + this.goalCode();
+                    + ' cart-progress-bar--goal-' + this.goalCode()
+                    + (this.termsShown() ? ' cart-progress-bar--terms' : '');
             }, this);
 
             if (this.config === null) {
@@ -77,8 +91,16 @@ define([
             this.link(goal.link);
             this.image(goal.image);
             this.terms(shown.terms);
+            this.termsParts(shown.termsParts);
             this.goalCode(goal.code);
             this.visible(true);
+        },
+
+        /**
+         * Show the terms in place of the text, or the text again.
+         */
+        toggleTerms: function () {
+            this.termsShown(!this.termsShown());
         },
 
         /**

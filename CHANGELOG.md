@@ -5,6 +5,17 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-11-27
+
+### Added
+- A goal with terms gets an info button (`cart-progress-bar__terms-toggle`) at the end of the bar. It shows the
+  terms in place of the text, with their amounts in bold, and turns into a close button; a second press, or Enter,
+  brings the text back. The root carries `cart-progress-bar--terms` while the terms are shown. The button's label,
+  "Show the terms" or "Hide the terms", is translatable.
+
+### Changed
+- The bar's root is a flex row, so the button sits beside the link.
+
 ## [1.1.0] - 2026-11-27
 
 ### Added

@@ -133,12 +133,13 @@ define([], function () {
      * What the bar shows for a goal and the shopper's amount towards it: the
      * phase, the percent reached, the label of the phase and the terms, each
      * label filled with the goal and the amount left in the given format, and
-     * the label of the phase cut into its words and its amounts.
+     * the label of the phase and the terms cut into their words and amounts.
      *
      * @param {{amount: number, labels: Object<string, string>}} goal
      * @param {number} amount The shopper's amount towards the goal
      * @param {function(number): string} formatPrice Formats an amount as a price
-     * @returns {{phase: string, percent: number, text: string, parts: Array<{text: string, amount: boolean}>, terms: string}}
+     * @returns {{phase: string, percent: number, text: string, parts: Array<{text: string, amount: boolean}>,
+     *     terms: string, termsParts: Array<{text: string, amount: boolean}>}}
      */
     function display(goal, amount, formatPrice) {
         var current = state(goal.amount, amount),
@@ -151,7 +152,8 @@ define([], function () {
             percent: current.percent,
             text: fill(label, formattedGoal, formattedLeft),
             parts: parts(label, formattedGoal, formattedLeft),
-            terms: fill(goal.labels ? goal.labels.terms : '', formattedGoal, formattedLeft)
+            terms: fill(goal.labels ? goal.labels.terms : '', formattedGoal, formattedLeft),
+            termsParts: parts(goal.labels ? goal.labels.terms : '', formattedGoal, formattedLeft)
         };
     }
 
