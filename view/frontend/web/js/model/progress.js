@@ -7,8 +7,8 @@
 /**
  * The bar's arithmetic and wording, free of the page: the phase of a goal for
  * the shopper's amount, the goal the bar shows when there are several, the
- * label with its placeholders filled, and the amount read from the cart
- * section. Amounts are compared in hundredths, so a float sum never misses
+ * labels and the terms with their placeholders filled, and the amount read
+ * from the cart section. Amounts are compared in hundredths, so a float sum never misses
  * the goal by a fraction of a penny.
  */
 define([], function () {
@@ -68,6 +68,21 @@ define([], function () {
     }
 
     /**
+     * A label with every `{{goal}}` and `{{goal_left}}` filled. The result is
+     * text, never markup.
+     *
+     * @param {*} label The label as configured; anything but text is no label
+     * @param {string} formattedGoal The goal, formatted as a price
+     * @param {string} formattedLeft The amount left, formatted as a price
+     * @returns {string}
+     */
+    function fill(label, formattedGoal, formattedLeft) {
+        var text = typeof label === 'string' ? label : '';
+
+        return text.split('{{goal}}').join(formattedGoal).split('{{goal_left}}').join(formattedLeft);
+    }
+
+    /**
      * The label of a phase, with every `{{goal}}` and `{{goal_left}}` filled.
      * The result is text, never markup.
      *
@@ -78,9 +93,30 @@ define([], function () {
      * @returns {string}
      */
     function message(labels, phase, formattedGoal, formattedLeft) {
-        var label = labels && typeof labels[phase] === 'string' ? labels[phase] : '';
+        return fill(labels ? labels[phase] : '', formattedGoal, formattedLeft);
+    }
 
-        return label.split('{{goal}}').join(formattedGoal).split('{{goal_left}}').join(formattedLeft);
+    /**
+     * What the bar shows for a goal and the shopper's amount towards it: the
+     * phase, the percent reached, the label of the phase and the terms, each
+     * label filled with the goal and the amount left in the given format.
+     *
+     * @param {{amount: number, labels: Object<string, string>}} goal
+     * @param {number} amount The shopper's amount towards the goal
+     * @param {function(number): string} formatPrice Formats an amount as a price
+     * @returns {{phase: string, percent: number, text: string, terms: string}}
+     */
+    function display(goal, amount, formatPrice) {
+        var current = state(goal.amount, amount),
+            formattedGoal = formatPrice(goal.amount),
+            formattedLeft = formatPrice(current.left);
+
+        return {
+            phase: current.phase,
+            percent: current.percent,
+            text: message(goal.labels, current.phase, formattedGoal, formattedLeft),
+            terms: fill(goal.labels ? goal.labels.terms : '', formattedGoal, formattedLeft)
+        };
     }
 
     /**
@@ -112,6 +148,7 @@ define([], function () {
         state: state,
         pick: pick,
         message: message,
+        display: display,
         amountAt: amountAt
     });
 });

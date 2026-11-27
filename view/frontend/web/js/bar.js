@@ -68,14 +68,14 @@ define([
             var goal = progress.pick(this.config.goals, function (candidate) {
                     return progress.amountAt(section, candidate.amountKey);
                 }),
-                state = progress.state(goal.amount, progress.amountAt(section, goal.amountKey));
+                shown = progress.display(goal, progress.amountAt(section, goal.amountKey), this.price.bind(this));
 
-            this.text(progress.message(goal.labels, state.phase, this.price(goal.amount), this.price(state.left)));
-            this.percent(state.percent);
-            this.phase(state.phase);
+            this.text(shown.text);
+            this.percent(shown.percent);
+            this.phase(shown.phase);
             this.link(goal.link);
             this.image(goal.image);
-            this.terms(goal.labels.terms);
+            this.terms(shown.terms);
             this.goalCode(goal.code);
             this.visible(true);
         },

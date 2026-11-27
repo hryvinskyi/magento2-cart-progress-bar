@@ -2,7 +2,7 @@
     "name": "hryvinskyi/magento2-cart-progress-bar",
     "description": "Cart progress bar: shows the shopper how far the cart is from a spend goal that other modules contribute, at the top of the header, in the minicart and on the cart page.",
     "type": "magento2-module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "authors": [
         {
